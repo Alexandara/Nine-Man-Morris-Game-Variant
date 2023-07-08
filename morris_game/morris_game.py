@@ -8,14 +8,123 @@ class MorrisGame:
     Class that runs the game Nine Man's Morris for Summer 2023 UT Dallas
     Artificial Intelligence course.
     """
-    def __init__(self):
-        self.player_color = "w" # TODO: fix this
-        self.board_state = []
-        for i in range(21):
-            self.board_state.append('x')
-        while self.player_color not in ('w','b'):
-            print("Will you play white (w) or black (b)?")
-            # self.player_color = input()
+    def __init__(self, input="NA", output="NA", depth=0):
+        if input == "NA":
+            self.player_color = "x"
+            self.board_state = []
+            self.game_stage = "o" # Opening stage
+            self.turns = 0
+            for i in range(21):
+                self.board_state.append('x')
+
+    def play(self):
+        while self.player_color not in ('W','B'):
+            print("Will you play white (W) or black (B)?")
+            self.player_color = input().upper()
+        if self.player_color == 'W':
+            self.player_turn()
+        while self.turns < 60 and self.game_over() == 'x':
+            if self.game_stage == "o":
+                if self.player_color == 'B':
+                    moves = self.generate_moves_opening(self.board_state.copy())
+                    self.board_state = self.choose_move(moves.copy())
+                else:
+                    temp_board = self.flip_board(self.board_state.copy())
+                    moves = self.generate_moves_opening(temp_board)
+                    new_board = self.choose_move(moves.copy())
+                    self.board_state = self.flip_board(new_board.copy())
+            else:
+                if self.player_color == 'B':
+                    moves = self.generate_moves_midgame_endgame(self.board_state.copy())
+                    self.board_state = self.choose_move(moves.copy())
+                else:
+                    temp_board = self.flip_board(self.board_state.copy())
+                    moves = self.generate_moves_midgame_endgame(temp_board)
+                    new_board = self.choose_move(moves.copy())
+                    self.board_state = self.flip_board(new_board.copy())
+            self.player_turn()
+        print("Win for " + self.game_over())
+
+    def player_turn(self):
+        self.print_board()
+        if self.game_stage == "o":
+            print("Please enter the numerical designation " + \
+              "(i.e. 0, 7, etc.) indicating the space you'd like to place a " + \
+                  "piece. Enter \'h\' for help and board reference.")
+            move = -1
+            while move < 0 or move > 20:
+                move = input().upper()
+                if move == 'H':
+                    self.print_reference()
+                    move = -1
+                else:
+                    move = int(move)
+            self.board_state[move] = self.player_color
+            if self.close_mill(move, self.board_state):
+                print("Please enter the numerical designation (" + \
+                      "i.e. 0, 7, etc.) indicating the piece you'd like to" + \
+                      " remove. Enter \'h\' for help and board reference.")
+                move = -1
+                while move < 0 or move > 20:
+                    move = input().upper()
+                    if move == 'H':
+                        self.print_reference()
+                        move = -1
+                    else:
+                        move = int(move)
+                self.board_state[move] = 'x'
+        else:
+            print("Please enter the numerical designation " + \
+                  "(i.e. 0, 7, etc.) indicating the piece you'd like to move")
+            print("Enter \'h\' for help and board reference.")
+            move = -1
+            while move < 0 or move > 20:
+                move = input().upper()
+                if move == 'H':
+                    self.print_reference()
+                    move = -1
+                else:
+                    move = int(move)
+            self.board_state[move] = 'x'
+            print("Please enter the numerical designation " + \
+                  "(i.e. 0, 7, etc.) indicating the place you'd like" + \
+                  " to move to.")
+            print("Enter \'h\' for help and board reference.")
+            move = -1
+            while move < 0 or move > 20:
+                move = input().upper()
+                if move == 'H':
+                    self.print_reference()
+                    move = -1
+                else:
+                    move = int(move)
+            self.board_state[move] = self.player_color
+            if self.close_mill(move, self.board_state):
+                print("Please enter the numerical designation (" + \
+                      "i.e. 0, 7, etc.) indicating the piece you'd like to" + \
+                      " remove. Enter \'h\' for help and board reference.")
+                move = -1
+                while move < 0 or move > 20:
+                    move = input().upper()
+                    if move == 'H':
+                        self.print_reference()
+                        move = -1
+                    else:
+                        move = int(move)
+                self.board_state[move] = 'x'
+        self.turns = self.turns + 1
+        if self.turns == 16:
+            self.game_stage = "me"
+
+    def choose_move(self, moves):
+        best = []
+        for move in moves:
+            best.append(self.static_estimation(move))
+        ind = best.index(max(best))
+        self.turns = self.turns + 1
+        if self.turns == 16:
+            self.game_stage = "me"
+        return moves[ind]
 
     def print_board(self):
         """
@@ -111,7 +220,37 @@ class MorrisGame:
               dash * 5 +
               "-" * 4 + self.board_state[1])
 
-    def generate_add(self):
+    @staticmethod
+    def flip_board(curr_board):
+        new_board = curr_board.copy()
+        for i in range (len(new_board)):
+            if new_board[i] == 'W':
+                new_board[i] = 'B'
+            elif new_board[i] == 'B':
+                new_board[i] = 'W'
+        return new_board
+
+    def generate_moves_opening(self, curr_board):
+        """
+        Returns a list of valid opening moves
+        :return: list of valid opening moves
+        """
+        return self.generate_add(curr_board)
+
+    def generate_moves_midgame_endgame(self, curr_board):
+        """
+        If the board has 3 white pieces Return the list produced by
+        GenerateHopping applied to the board. Otherwise return the
+        list produced by GenerateMove applied to the board.
+        :param curr_board: current board state
+        :return: list of possible moves
+        """
+        num_white = self.count_piece("W", curr_board)
+        if num_white <= 3:
+            return self.generate_hopping(curr_board)
+        return self.generate_move(curr_board)
+
+    def generate_add(self, curr_board):
         """
         This method produces a list of board positions possible in the opening
         stage wherein a piece can be placed anywhere there is not currently a
@@ -119,9 +258,9 @@ class MorrisGame:
         :return: a list L of board positions possible
         """
         L = []
-        for i in range(len(self.board_state)):
-            if self.board_state[i] == 'x':
-                b_copy = self.board_state
+        for i in range(len(curr_board)):
+            if curr_board[i] == 'x':
+                b_copy = curr_board.copy()
                 b_copy[i] = 'W'
                 if self.close_mill(i, b_copy):
                     L.extend(self.generate_remove(b_copy))
@@ -129,18 +268,18 @@ class MorrisGame:
                     L.append(b_copy)
         return L
 
-    def generate_hopping(self):
+    def generate_hopping(self, curr_board):
         """
         Generate hopping generates moves for when white only has three pieces,
         in which case white can move to any available empty position.
         :return: a list L of board positions after hopping
         """
         L = []
-        for a in range(len(self.board_state)):
-            if self.board_state[a] == 'W':
-                for b in range(len(self.board_state)):
-                    if self.board_state[b] == 'x':
-                        b_copy = self.board_state
+        for a in range(len(curr_board)):
+            if curr_board[a] == 'W':
+                for b in range(len(curr_board)):
+                    if curr_board[b] == 'x':
+                        b_copy = curr_board.copy()
                         b_copy[a] = 'x'
                         b_copy[b] = 'W'
                         if self.close_mill(b, b_copy):
@@ -149,18 +288,18 @@ class MorrisGame:
                             L.append(b_copy)
         return L
 
-    def generate_move(self):
+    def generate_move(self, curr_board):
         """
         Generate move creates a list of possible moves
         :return: a list L of board positions from moving a piece
         """
         L = []
-        for location in range(len(self.board_state)):
-            if self.board_state[location] == 'W':
+        for location in range(len(curr_board)):
+            if curr_board[location] == 'W':
                 neighbors = self.get_neighbors(location)
                 for neighbor in neighbors:
-                    if self.board_state[neighbor] == 'x':
-                        b_copy = self.board_state
+                    if curr_board[neighbor] == 'x':
+                        b_copy = curr_board.copy()
                         b_copy[location] = 'x'
                         b_copy[neighbor] = 'W'
                         if self.close_mill(neighbor, b_copy):
@@ -178,7 +317,7 @@ class MorrisGame:
         for location in range(len(curr_board)):
             if curr_board[location] == 'B':
                 if not self.close_mill(location, curr_board):
-                    b_copy = curr_board
+                    b_copy = curr_board.copy()
                     b_copy[location] = 'x'
                     L.append(b_copy)
         if not L:
@@ -238,23 +377,10 @@ class MorrisGame:
 
     def close_mill(self, location, curr_board):
         """
-        closeMill
-        Input: a location j in the array representing the board and the board b
-        Output: true if the move to j closes a mill
-            C = b[j]; C must be either W or B. Cannot be x.
-            switch(j) {
-                case j==0 (a0) : return true if
-                    (b[6]==C and b[18]==C)
-                    else return false
-                case j==6 (a3) : return true if
-                    (b[0]==C and b[18]==C)
-                    or (b[7]==C and b[8]==C)
-                    else return false
-                etc.
-            }
-        :param location:
-        :param curr_board:
-        :return:
+        Close mill calculates whether a board has a closed mill or not
+        :param location: Most recent move
+        :param curr_board: Current board being looked at
+        :return: True is the location closes a mill, false if not
         """
         c = curr_board[location]
         if location == 0:
@@ -318,27 +444,103 @@ class MorrisGame:
             else:
                 return False
         elif location == 11:
-            return [1,10,20]
+            if curr_board[20] == c and curr_board[1] == c \
+                    or curr_board[9] == c and curr_board[10] == c:
+                return True
+            else:
+                return False
         elif location == 12:
-            return [8,13]
+            if curr_board[8] == c and curr_board[4] == c \
+                    or curr_board[13] == c and curr_board[14] == c:
+                return True
+            else:
+                return False
         elif location == 13:
-            return [12,14,16]
+            if curr_board[12] == c and curr_board[14] == c \
+                    or curr_board[16] == c and curr_board[19] == c:
+                return True
+            else:
+                return False
         elif location == 14:
-            return [9,13]
+            if curr_board[12] == c and curr_board[13] == c \
+                    or curr_board[9] == c and curr_board[5] == c:
+                return True
+            else:
+                return False
         elif location == 15:
-            return [7,16]
+            if curr_board[7] == c and curr_board[2] == c \
+                    or curr_board[16] == c and curr_board[17] == c:
+                return True
+            else:
+                return False
         elif location == 16:
-            return [13,15,17,19]
+            if curr_board[15] == c and curr_board[17] == c \
+                    or curr_board[13] == c and curr_board[19] == c:
+                return True
+            else:
+                return False
         elif location == 17:
-            return [10,16]
+            if curr_board[15] == c and curr_board[16] == c \
+                    or curr_board[10] == c and curr_board[3] == c:
+                return True
+            else:
+                return False
         elif location == 18:
-            return [6,19]
+            if curr_board[6] == c and curr_board[0] == c \
+                    or curr_board[19] == c and curr_board[20] == c:
+                return True
+            else:
+                return False
         elif location == 19:
-            return [16,18,20]
+            if curr_board[18] == c and curr_board[20] == c \
+                    or curr_board[16] == c and curr_board[13] == c:
+                return True
+            else:
+                return False
         elif location == 20:
-            return [11,19]
+            if curr_board[19] == c and curr_board[18] == c \
+                    or curr_board[11] == c and curr_board[1] == c:
+                return True
+            else:
+                return False
         else:
             return False
+
+    def game_over(self):
+        if self.game_stage == "o":
+            return "x"
+        curr_estimate = self.static_estimation(self.board_state)
+        if curr_estimate == 10000:
+            return "W"
+        elif curr_estimate == -10000:
+            return "B"
+        else:
+            return "x"
+
+    def static_estimation(self, curr_board):
+        num_white = self.count_piece("W", curr_board)
+        num_black = self.count_piece("B", curr_board)
+        list = self.generate_moves_midgame_endgame(curr_board)
+        num_black_moves = len(list)
+        if self.game_stage == "o":
+            return num_white - num_black
+        else:
+            if num_black <= 2:
+                return 10000
+            elif num_white <= 2:
+                return -10000
+            elif num_black_moves == 0:
+                return 10000
+            else:
+                return 1000 * (num_white - num_black) - num_black_moves
+
+    @staticmethod
+    def count_piece(piece_color, curr_board):
+        num = 0
+        for piece in curr_board:
+            if piece == piece_color:
+                num = num + 1
+        return num
 
     @staticmethod
     def print_reference():
@@ -349,11 +551,10 @@ class MorrisGame:
         print("----- ----- 04-c2 ----- 05-e2 ----- -----")
         print("----- 02-b1 ----- ----- ----- 03-f1 -----")
         print("00-a0 ----- ----- ----- ----- ----- 01-g0\n")
-        print("To move, first indicate the number or space code (i.e. a2," +
-              " b4, etc.) of the piece you want to move, then indicate the " +
-              "number or space code for the place you want to move the " +
-              "piece to.")
+        print("To move, first indicate the numerical designation (i.e. 0" +
+              " for a0, 11 for g3, etc.) of the piece you want to move, " +
+              "\nthen indicate the number or space code for the place you " +
+              "want to move the piece to.")
 
 if __name__ == '__main__':
     morris = MorrisGame()
-    morris.generate_add()
