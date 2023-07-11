@@ -46,7 +46,7 @@ class MorrisGame:
         print("Win for " + self.game_over())
 
     def player_turn(self):
-        self.print_board()
+        self.print_board(self.board_state)
         if self.game_stage == "o":
             print("Please enter the numerical designation " + \
               "(i.e. 0, 7, etc.) indicating the space you'd like to place a " + \
@@ -126,7 +126,8 @@ class MorrisGame:
             self.game_stage = "me"
         return moves[ind]
 
-    def print_board(self):
+    @staticmethod
+    def print_board(curr_board):
         """
         Method that prints the current board state.
         """
@@ -136,11 +137,11 @@ class MorrisGame:
         n_line = " " * 4 + "|"
         nnn = " " * 5
         # Line 6: a6-, -, -, d6, -, -, -g6
-        print(self.board_state[18] + "-" * 4 +
+        print(curr_board[18] + "-" * 4 +
               dash * 2 +
-              "-" * 2 + self.board_state[19] + "-" * 2 +
+              "-" * 2 + curr_board[19] + "-" * 2 +
               dash * 2 +
-              "-" * 4 + self.board_state[20])
+              "-" * 4 + curr_board[20])
         # Line 6-5: |n, n, n, |, n, n, n|
         print(line_n +
               nnn * 2 +
@@ -149,11 +150,11 @@ class MorrisGame:
               n_line)
         # Line 5: |n, b5-, -, -d5-, -, -f5, n|
         print(line_n +
-              " " * 2 + self.board_state[15] + "-" * 2 +
+              " " * 2 + curr_board[15] + "-" * 2 +
               dash +
-              "-" * 2 + self.board_state[16] + "-" * 2 +
+              "-" * 2 + curr_board[16] + "-" * 2 +
               dash +
-              "-" * 2 + self.board_state[17] + " " * 2 +
+              "-" * 2 + curr_board[17] + " " * 2 +
               n_line)
         # Line 5-4: |n, n|n, n, n|n, n, n|n, n|n
         print(line_n +
@@ -166,9 +167,9 @@ class MorrisGame:
         # Line 4: |n, n|n, c4-, -d4-, -e4, n|n, n|
         print(line_n +
               n_line_n +
-              " " * 2 + self.board_state[12] + "-" * 2 +
-              "-" * 2 + self.board_state[13] + "-" * 2 +
-              "-" * 2 + self.board_state[14] + " " * 2 +
+              " " * 2 + curr_board[12] + "-" * 2 +
+              "-" * 2 + curr_board[13] + "-" * 2 +
+              "-" * 2 + curr_board[14] + " " * 2 +
               n_line_n +
               n_line)
         # Line 4-3: |n, n|n, n|n, n, n|n, n|n, n|
@@ -178,13 +179,13 @@ class MorrisGame:
               n_line_n * 2 +
               n_line)
         # Line 3: a3-, -b3-, -c3, n, e3-, -f3-, -g3
-        print(self.board_state[6] + "-" * 4 +
-              "-" * 2 + self.board_state[7] + "-" * 2 +
-              "-" * 2 + self.board_state[8] + " " * 2 +
+        print(curr_board[6] + "-" * 4 +
+              "-" * 2 + curr_board[7] + "-" * 2 +
+              "-" * 2 + curr_board[8] + " " * 2 +
               nnn +
-              " " * 2 + self.board_state[9] + "-" * 2 +
-              "-" * 2 + self.board_state[10] + "-" * 2 +
-              "-" * 4 + self.board_state[11])
+              " " * 2 + curr_board[9] + "-" * 2 +
+              "-" * 2 + curr_board[10] + "-" * 2 +
+              "-" * 4 + curr_board[11])
         # Line 3-2: |n, n|n, n|n, n, n|n, n|n, n|
         print(line_n +
               n_line_n * 2 +
@@ -194,9 +195,9 @@ class MorrisGame:
         # Line 2: |n, n|n, c2-, -, -e2, n|n, n|
         print(line_n +
               n_line_n +
-              " " * 2 + self.board_state[4] + "-" * 2 +
+              " " * 2 + curr_board[4] + "-" * 2 +
               dash +
-              "-" * 2 + self.board_state[5] + " " * 2 +
+              "-" * 2 + curr_board[5] + " " * 2 +
               n_line_n +
               n_line)
         # Line 2-1: |n, n|n, n, n, n, n|n, n|
@@ -207,18 +208,18 @@ class MorrisGame:
               n_line)
         # Line 1: |n, b1-, -, -, -, -f1, n|
         print(line_n +
-              " " * 2 + self.board_state[2] + "-" * 2 +
+              " " * 2 + curr_board[2] + "-" * 2 +
               dash * 3 +
-              "-" * 2 + self.board_state[3] + " " * 2 +
+              "-" * 2 + curr_board[3] + " " * 2 +
               n_line)
         # Line 1-0: |n, n, n, n, n, n, n|
         print(line_n +
               nnn * 5 +
               n_line)
         # Line 0: a0-, -, -, -, -, -, -g0
-        print(self.board_state[0] + "-" * 4 +
+        print(curr_board[0] + "-" * 4 +
               dash * 5 +
-              "-" * 4 + self.board_state[1])
+              "-" * 4 + curr_board[1])
 
     @staticmethod
     def flip_board(curr_board):
@@ -520,11 +521,11 @@ class MorrisGame:
     def static_estimation(self, curr_board):
         num_white = self.count_piece("W", curr_board)
         num_black = self.count_piece("B", curr_board)
-        list = self.generate_moves_midgame_endgame(curr_board)
-        num_black_moves = len(list)
         if self.game_stage == "o":
             return num_white - num_black
         else:
+            list_moves = self.generate_moves_midgame_endgame(curr_board)
+            num_black_moves = len(list_moves)
             if num_black <= 2:
                 return 10000
             elif num_white <= 2:
@@ -555,6 +556,20 @@ class MorrisGame:
               " for a0, 11 for g3, etc.) of the piece you want to move, " +
               "\nthen indicate the number or space code for the place you " +
               "want to move the piece to.")
+
+    @staticmethod
+    def board_to_string(curr_board):
+        result = ""
+        for pos in curr_board:
+            result = result + pos
+        return result
+
+    @staticmethod
+    def string_to_board(board_string: str):
+        board = []
+        for char in board_string:
+            board.append(char)
+        return board
 
 if __name__ == '__main__':
     morris = MorrisGame()
