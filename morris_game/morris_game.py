@@ -3,6 +3,15 @@ Morris Game
 
 :author: Alexis Tudor
 """
+class Result:
+    """
+    Result objects store the results of static estimation (evaluation) on a
+    given move (move).
+    """
+    def __init__(self, evaluation, move):
+        self.evaluation = evaluation
+        self.move = move
+
 class MorrisGame:
     """
     Class that runs the game Nine Man's Morris for Summer 2023 UT Dallas
@@ -18,6 +27,9 @@ class MorrisGame:
                 self.board_state.append('x')
 
     def play(self):
+        """
+        Function that plays the Morris Game with a human player.
+        """
         while self.player_color not in ('W','B'):
             print("Will you play white (W) or black (B)?")
             self.player_color = input().upper()
@@ -46,6 +58,9 @@ class MorrisGame:
         print("Win for " + self.game_over())
 
     def player_turn(self):
+        """
+        Function to allow the human player to take a turn.
+        """
         self.print_board(self.board_state)
         if self.game_stage == "o":
             print("Please enter the numerical designation " + \
@@ -117,6 +132,11 @@ class MorrisGame:
             self.game_stage = "me"
 
     def choose_move(self, moves):
+        """
+        Basic function to choose a move for the computer to play.
+        :param moves: list of possible moves.
+        :return: chosen move
+        """
         best = []
         for move in moves:
             best.append(self.static_estimation(move))
@@ -223,6 +243,11 @@ class MorrisGame:
 
     @staticmethod
     def flip_board(curr_board):
+        """
+        Helper method that flips white and black on the board.
+        :param curr_board: board to flip
+        :return: flipped board
+        """
         new_board = curr_board.copy()
         for i in range (len(new_board)):
             if new_board[i] == 'W':
@@ -508,6 +533,10 @@ class MorrisGame:
             return False
 
     def game_over(self):
+        """
+        Method that checks if someone has won yet.
+        :return: W if white won, B if black won, x if no winner yet.
+        """
         if self.game_stage == "o":
             return "x"
         curr_estimate = self.static_estimation(self.board_state)
@@ -519,6 +548,11 @@ class MorrisGame:
             return "x"
 
     def static_estimation(self, curr_board):
+        """
+        Base in-class static estimation function.
+        :param curr_board: board to estimate
+        :return: numerical estimate of board
+        """
         num_white = self.count_piece("W", curr_board)
         num_black = self.count_piece("B", curr_board)
         if self.game_stage == "o":
@@ -537,6 +571,12 @@ class MorrisGame:
 
     @staticmethod
     def count_piece(piece_color, curr_board):
+        """
+        Counts how many pieces of a certain color are on the board
+        :param piece_color: which color to count
+        :param curr_board: board to count on
+        :return: count of pieces
+        """
         num = 0
         for piece in curr_board:
             if piece == piece_color:
@@ -545,6 +585,10 @@ class MorrisGame:
 
     @staticmethod
     def print_reference():
+        """
+        A helpful reference guide to help players know which number corresponds
+        to which space.
+        """
         print("18-a6 ----- ----- 19-d6 ----- ----- 20-g6")
         print("----- 15-b5 ----- 16-d5 ----- 17-f5 -----")
         print("----- ----- 12-c4 13-d4 14-e4 ----- -----")
@@ -559,6 +603,11 @@ class MorrisGame:
 
     @staticmethod
     def board_to_string(curr_board):
+        """
+        Converts a board list to a string.
+        :param curr_board: board list
+        :return: string board
+        """
         result = ""
         for pos in curr_board:
             result = result + pos
@@ -566,6 +615,11 @@ class MorrisGame:
 
     @staticmethod
     def string_to_board(board_string: str):
+        """
+        Converts a string to a board list.
+        :param board_string: board string
+        :return: list board
+        """
         board = []
         for char in board_string:
             board.append(char)

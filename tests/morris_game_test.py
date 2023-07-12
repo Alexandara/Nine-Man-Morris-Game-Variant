@@ -26,4 +26,3 @@ def test_static_estimate(create_morris):
     est = morris.static_estimation(['B', 'W', 'B', 'W', 'B', 'W', 'x', 'B', 'x', 'x',
                         'W', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x'])
     assert est == 0
-
