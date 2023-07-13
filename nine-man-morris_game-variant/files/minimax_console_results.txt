@@ -1,0 +1,58 @@
+MiniMax Examples:
+Opening Examples
+Board Position: WxxxxxxWxxxxxxBxxxxxx
+Positions evaluated by static estimation: 5882
+MINIMAX estimate: 1
+Board Position: xxBBxWBxBxWWxxWxWxBBx
+Positions evaluated by static estimation: 4086
+MINIMAX estimate: -1
+Board Position: xBBBxWBxBxWWxxWxWxBBx
+Positions evaluated by static estimation: 3596
+MINIMAX estimate: -2
+Game Examples
+Board Position: BxBWBWxBxxWWxxxxxxxxx
+Positions evaluated by static estimation: 167
+MINIMAX estimate: 995
+Board Position: xxBBxxxxBWWWxxxxWxxxx
+Positions evaluated by static estimation: 3700
+MINIMAX estimate: 993
+Board Position: WxxBxBxWxxxxxxWxBxWxx
+Positions evaluated by static estimation: 2154
+MINIMAX estimate: 995
+Black Opening Examples
+Board Position: BxxxxxxWxxxxxxBxxxxxx
+Positions evaluated by static estimation: 5882
+MINIMAX estimate: 1
+Board Position: BxBBxxBxBxxWxxWxWxBBx
+Positions evaluated by static estimation: 4430
+MINIMAX estimate: 5
+Black Game Examples
+Board Position: xWBWBWBBxxWxxxxxxxxxx
+Positions evaluated by static estimation: 167
+MINIMAX estimate: 995
+Board Position: xxxBxxBBBxxWxxWxWxxxx
+Positions evaluated by static estimation: 2551
+MINIMAX estimate: 991
+Board Position: WxWxxBxxxxxxxxWBBxWxx
+Positions evaluated by static estimation: 12306
+MINIMAX estimate: -45
+Improved Opening Examples
+Board Position: WxxxxxxWxxxxxxBxxxxxx
+Positions evaluated by static estimation: 5882
+MINIMAX estimate: 1
+Board Position: xxBBxxBxBWWWxxWxWxxBx
+Positions evaluated by static estimation: 4086
+MINIMAX estimate: 9
+Board Position: xBBBxxBxBWWWxxWxWxxBx
+Positions evaluated by static estimation: 3596
+MINIMAX estimate: 8
+Improved Game Examples
+Board Position: BxBWBWxBxxWWxxxxxxxxx
+Positions evaluated by static estimation: 167
+MINIMAX estimate: 1995
+Board Position: xxBBxxxxBWWWxxxxWxxxx
+Positions evaluated by static estimation: 3700
+MINIMAX estimate: 1993
+Board Position: WxxBxBxWxxxxxxWxBxWxx
+Positions evaluated by static estimation: 2154
+MINIMAX estimate: 995

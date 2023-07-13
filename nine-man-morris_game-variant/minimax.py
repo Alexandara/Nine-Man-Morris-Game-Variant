@@ -294,7 +294,7 @@ class MiniMaxOpeningImproved(MorrisGame):
             elif num_black_moves == 0:
                 return 10000
             else:
-                return (1000 * (num_white - num_black) - num_black_moves) + (1000 * add_num)
+                return (1000 * (num_white - num_black) - num_black_moves) + (100 * add_num)
 
 class MiniMaxGameImproved(MorrisGame):
     """
@@ -389,13 +389,36 @@ class MiniMaxGameImproved(MorrisGame):
             elif num_black_moves == 0:
                 return 10000
             else:
-                return (1000 * (num_white - num_black) - num_black_moves) + (1000 * add_num)
+                return (1000 * (num_white - num_black) - num_black_moves) + (100 * add_num)
 
 if __name__ == '__main__':
+    print("MiniMax Examples:")
     # Opening Examples
-    mmo = MiniMaxOpening("files/board_opening.txt", "files/board_opening_example1.txt", 3)
-    mmme = MiniMaxGame("files/board_midgame_endgame.txt", "files/board_me_answer.txt", 3)
-    mmob = MiniMaxOpeningBlack("files/board_opening.txt", "files/board_ob_answer.txt", 3)
-    mmmeb = MiniMaxGameBlack("files/board_midgame_endgame.txt", "files/board_meb_answer.txt", 3)
-    mmoi = MiniMaxOpeningImproved("files/board_opening.txt", "files/board_oi_answer.txt", 3)
-    mmmei = MiniMaxGameImproved("files/board_midgame_endgame.txt", "files/board_mei_answer.txt", 3)
+    print("Opening Examples")
+    MiniMaxOpening("files/board_opening1.txt", "files/board_opening1_MiniMaxOpening_D3.txt", 3)
+    MiniMaxOpening("files/board_opening2.txt", "files/board_opening2_MiniMaxOpening_D3.txt", 3)
+    MiniMaxOpening("files/board_opening3.txt", "files/board_opening3_MiniMaxOpening_D3.txt", 3)
+    # Game Examples
+    print("Game Examples")
+    MiniMaxGame("files/board_midgame_endgame1.txt", "files/board_midgame_endgame1_MiniMaxGame_D3.txt", 3)
+    MiniMaxGame("files/board_midgame_endgame2.txt", "files/board_midgame_endgame2_MiniMaxGame_D3.txt", 3)
+    MiniMaxGame("files/board_midgame_endgame3.txt", "files/board_midgame_endgame3_MiniMaxGame_D3.txt", 3)
+    # Black Opening Examples
+    print("Black Opening Examples")
+    MiniMaxOpeningBlack("files/board_opening1.txt", "files/board_opening1_MiniMaxOpeningBlack_D3.txt", 3)
+    MiniMaxOpeningBlack("files/board_opening2.txt", "files/board_opening2_MiniMaxOpeningBlack_D3.txt", 3)
+    # Black Game Examples
+    print("Black Game Examples")
+    MiniMaxGameBlack("files/board_midgame_endgame1.txt", "files/board_midgame_endgame1_MiniMaxGameBlack_D3.txt", 3)
+    MiniMaxGameBlack("files/board_midgame_endgame2.txt", "files/board_midgame_endgame2_MiniMaxGameBlack_D3.txt", 3)
+    MiniMaxGameBlack("files/board_midgame_endgame3.txt", "files/board_midgame_endgame3_MiniMaxGameBlack_D3.txt", 3)
+    # Improved Opening Examples
+    print("Improved Opening Examples")
+    MiniMaxOpeningImproved("files/board_opening1.txt", "files/board_opening1_MiniMaxOpeningImproved_D3.txt", 3)
+    MiniMaxOpeningImproved("files/board_opening2.txt", "files/board_opening2_MiniMaxOpeningImproved_D3.txt", 3)
+    MiniMaxOpeningImproved("files/board_opening3.txt", "files/board_opening3_MiniMaxOpeningImproved_D3.txt", 3)
+    # Improved Game Examples
+    print("Improved Game Examples")
+    MiniMaxGameImproved("files/board_midgame_endgame1.txt", "files/board_midgame_endgame1_MiniMaxGameImproved_D3.txt", 3)
+    MiniMaxGameImproved("files/board_midgame_endgame2.txt", "files/board_midgame_endgame2_MiniMaxGameImproved_D3.txt", 3)
+    MiniMaxGameImproved("files/board_midgame_endgame3.txt", "files/board_midgame_endgame3_MiniMaxGameImproved_D3.txt", 3)

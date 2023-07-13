@@ -627,3 +627,5 @@ class MorrisGame:
 
 if __name__ == '__main__':
     morris = MorrisGame()
+    morris.print_reference()
+    #morris.play()

@@ -1,0 +1,24 @@
+Alpha-Beta Pruning Examples
+Opening Examples
+Board Position: WxxxxxxWxxxxxxBxxxxxx
+Positions evaluated by static estimation: 606
+MINIMAX/Alpha-Beta estimate: 1
+Board Position: xxBBxWBxBxWWxxWxWxBBx
+Positions evaluated by static estimation: 414
+MINIMAX/Alpha-Beta estimate: -1
+Board Position: xBBBxWBxBxWWxxWxWxBBx
+Positions evaluated by static estimation: 347
+MINIMAX/Alpha-Beta estimate: -2
+Board Position: xBBBxWBxBxWWxxWxWxBBx
+Positions evaluated by static estimation: 347
+MINIMAX/Alpha-Beta estimate: -2
+Game Examples
+Board Position: BxBWBWxBxxWWxxxxxxxxx
+Positions evaluated by static estimation: 45
+MINIMAX/Alpha-Beta estimate: 995
+Board Position: xxBBxxxxBWWWxxxxWxxxx
+Positions evaluated by static estimation: 1088
+MINIMAX/Alpha-Beta estimate: 993
+Board Position: WxxBxBxWxxxxxxWxBxWxx
+Positions evaluated by static estimation: 304
+MINIMAX/Alpha-Beta estimate: 995

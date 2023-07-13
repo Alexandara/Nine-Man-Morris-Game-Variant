@@ -2,7 +2,7 @@ import io
 import pytest
 from _pytest.monkeypatch import MonkeyPatch
 import sys
-sys.path.append("../morris_game")
+sys.path.append("../nine-man-morris_game-variant")
 
 from morris_game.morris_game import MorrisGame
 

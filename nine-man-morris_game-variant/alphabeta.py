@@ -32,7 +32,7 @@ class ABOpening(MorrisGame):
         output_file.close()
         print("Board Position: " + str_move)
         print("Positions evaluated by static estimation: " + str(self.positions_evaluated))
-        print("MINIMAX estimate: " + str(result.evaluation))
+        print("MINIMAX/Alpha-Beta estimate: " + str(result.evaluation))
 
     def choose_move(self, curr_board, depth, alpha, beta, max_player=True):
         """
@@ -107,7 +107,7 @@ class ABGame(MorrisGame):
         output_file.close()
         print("Board Position: " + str_move)
         print("Positions evaluated by static estimation: " + str(self.positions_evaluated))
-        print("MINIMAX estimate: " + str(result.evaluation))
+        print("MINIMAX/Alpha-Beta estimate: " + str(result.evaluation))
 
     def choose_move(self, curr_board, depth, alpha, beta, max_player=True):
         """
@@ -158,5 +158,15 @@ class ABGame(MorrisGame):
         return num
 
 if __name__ == '__main__':
-    abo = ABOpening("files/board_opening.txt", "files/board_oab_answer.txt", 5)
-    abg = ABGame("files/board_midgame_endgame.txt", "files/board_meab_answer.txt", 3)
+    print("Alpha-Beta Pruning Examples")
+    # Opening Examples
+    print("Opening Examples")
+    ABOpening("files/board_opening1.txt", "files/board_opening1_ABOpening_D3.txt", 3)
+    ABOpening("files/board_opening2.txt", "files/board_opening2_ABOpening_D3.txt", 3)
+    ABOpening("files/board_opening3.txt", "files/board_opening3_ABOpening_D3.txt", 3)
+    ABOpening("files/board_opening3.txt", "files/board_opening3_ABOpening_D3.txt", 3)
+    # Game Examples
+    print("Game Examples")
+    ABGame("files/board_midgame_endgame1.txt", "files/board_midgame_endgame1_ABGame_D3.txt", 3)
+    ABGame("files/board_midgame_endgame2.txt", "files/board_midgame_endgame2_ABGame_D3.txt", 3)
+    ABGame("files/board_midgame_endgame3.txt", "files/board_midgame_endgame3_ABGame_D3.txt", 3)
