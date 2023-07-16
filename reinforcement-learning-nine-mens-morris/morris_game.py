@@ -17,14 +17,13 @@ class MorrisGame:
     Class that runs the game Nine Man's Morris for Summer 2023 UT Dallas
     Artificial Intelligence course.
     """
-    def __init__(self, input="NA", output="NA", depth=0):
-        if input == "NA":
-            self.player_color = "x"
-            self.board_state = []
-            self.game_stage = "o" # Opening stage
-            self.turns = 0
-            for i in range(21):
-                self.board_state.append('x')
+    def __init__(self):
+        self.player_color = "x"
+        self.board_state = []
+        self.game_stage = "o" # Opening stage
+        self.turns = 0
+        for i in range(24):
+            self.board_state.append('x')
 
     def play(self):
         """
@@ -67,7 +66,7 @@ class MorrisGame:
               "(i.e. 0, 7, etc.) indicating the space you'd like to place a " + \
                   "piece. Enter \'h\' for help and board reference.")
             move = -1
-            while move < 0 or move > 20:
+            while move < 0 or move > 23:
                 move = input().upper()
                 if move == 'H':
                     self.print_reference()
@@ -80,7 +79,7 @@ class MorrisGame:
                       "i.e. 0, 7, etc.) indicating the piece you'd like to" + \
                       " remove. Enter \'h\' for help and board reference.")
                 move = -1
-                while move < 0 or move > 20:
+                while move < 0 or move > 23:
                     move = input().upper()
                     if move == 'H':
                         self.print_reference()
@@ -93,7 +92,7 @@ class MorrisGame:
                   "(i.e. 0, 7, etc.) indicating the piece you'd like to move")
             print("Enter \'h\' for help and board reference.")
             move = -1
-            while move < 0 or move > 20:
+            while move < 0 or move > 23:
                 move = input().upper()
                 if move == 'H':
                     self.print_reference()
@@ -106,7 +105,7 @@ class MorrisGame:
                   " to move to.")
             print("Enter \'h\' for help and board reference.")
             move = -1
-            while move < 0 or move > 20:
+            while move < 0 or move > 23:
                 move = input().upper()
                 if move == 'H':
                     self.print_reference()
@@ -119,7 +118,7 @@ class MorrisGame:
                       "i.e. 0, 7, etc.) indicating the piece you'd like to" + \
                       " remove. Enter \'h\' for help and board reference.")
                 move = -1
-                while move < 0 or move > 20:
+                while move < 0 or move > 23:
                     move = input().upper()
                     if move == 'H':
                         self.print_reference()
@@ -157,11 +156,11 @@ class MorrisGame:
         n_line = " " * 4 + "|"
         nnn = " " * 5
         # Line 6: a6-, -, -, d6, -, -, -g6
-        print(curr_board[18] + "-" * 4 +
+        print(curr_board[21] + "-" * 4 +
               dash * 2 +
-              "-" * 2 + curr_board[19] + "-" * 2 +
+              "-" * 2 + curr_board[22] + "-" * 2 +
               dash * 2 +
-              "-" * 4 + curr_board[20])
+              "-" * 4 + curr_board[23])
         # Line 6-5: |n, n, n, |, n, n, n|
         print(line_n +
               nnn * 2 +
@@ -170,11 +169,11 @@ class MorrisGame:
               n_line)
         # Line 5: |n, b5-, -, -d5-, -, -f5, n|
         print(line_n +
-              " " * 2 + curr_board[15] + "-" * 2 +
+              " " * 2 + curr_board[18] + "-" * 2 +
               dash +
-              "-" * 2 + curr_board[16] + "-" * 2 +
+              "-" * 2 + curr_board[19] + "-" * 2 +
               dash +
-              "-" * 2 + curr_board[17] + " " * 2 +
+              "-" * 2 + curr_board[20] + " " * 2 +
               n_line)
         # Line 5-4: |n, n|n, n, n|n, n, n|n, n|n
         print(line_n +
@@ -187,9 +186,9 @@ class MorrisGame:
         # Line 4: |n, n|n, c4-, -d4-, -e4, n|n, n|
         print(line_n +
               n_line_n +
-              " " * 2 + curr_board[12] + "-" * 2 +
-              "-" * 2 + curr_board[13] + "-" * 2 +
-              "-" * 2 + curr_board[14] + " " * 2 +
+              " " * 2 + curr_board[15] + "-" * 2 +
+              "-" * 2 + curr_board[16] + "-" * 2 +
+              "-" * 2 + curr_board[17] + " " * 2 +
               n_line_n +
               n_line)
         # Line 4-3: |n, n|n, n|n, n, n|n, n|n, n|
@@ -199,47 +198,55 @@ class MorrisGame:
               n_line_n * 2 +
               n_line)
         # Line 3: a3-, -b3-, -c3, n, e3-, -f3-, -g3
-        print(curr_board[6] + "-" * 4 +
+        print(curr_board[9] + "-" * 4 +
+              "-" * 2 + curr_board[10] + "-" * 2 +
+              "-" * 2 + curr_board[11] + " " * 2 +
+              nnn +
+              " " * 2 + curr_board[12] + "-" * 2 +
+              "-" * 2 + curr_board[13] + "-" * 2 +
+              "-" * 4 + curr_board[14])
+        # Line 3-2: |n, n|n, n|n, n|n, n|n, n|n, n|
+        print(line_n +
+              n_line_n * 2 +
+              nnn +
+              n_line_n * 2 +
+              n_line)
+        # Line 2: |n, n|n, c2-, -d2-, -e2, n|n, n|
+        print(line_n +
+              n_line_n +
+              " " * 2 + curr_board[6] + "-" * 2 +
               "-" * 2 + curr_board[7] + "-" * 2 +
               "-" * 2 + curr_board[8] + " " * 2 +
-              nnn +
-              " " * 2 + curr_board[9] + "-" * 2 +
-              "-" * 2 + curr_board[10] + "-" * 2 +
-              "-" * 4 + curr_board[11])
-        # Line 3-2: |n, n|n, n|n, n, n|n, n|n, n|
-        print(line_n +
-              n_line_n * 2 +
-              nnn +
-              n_line_n * 2 +
+              n_line_n +
               n_line)
-        # Line 2: |n, n|n, c2-, -, -e2, n|n, n|
+        # Line 2-1: |n, n|n, n, n|n, n, n|n, n|
         print(line_n +
               n_line_n +
-              " " * 2 + curr_board[4] + "-" * 2 +
+              nnn +
+              n_line_n +
+              nnn +
+              n_line_n +
+              n_line)
+        # Line 1: |n, b1-, -, -d1-, -, -f1, n|
+        print(line_n +
+              " " * 2 + curr_board[3] + "-" * 2 +
+              dash +
+              "-" * 2 + curr_board[4] + "-" * 2 +
               dash +
               "-" * 2 + curr_board[5] + " " * 2 +
-              n_line_n +
               n_line)
-        # Line 2-1: |n, n|n, n, n, n, n|n, n|
+        # Line 1-0: |n, n, n, n|n, n, n, n|
         print(line_n +
+              nnn * 2 +
               n_line_n +
-              nnn * 3 +
-              n_line_n +
+              nnn * 2 +
               n_line)
-        # Line 1: |n, b1-, -, -, -, -f1, n|
-        print(line_n +
-              " " * 2 + curr_board[2] + "-" * 2 +
-              dash * 3 +
-              "-" * 2 + curr_board[3] + " " * 2 +
-              n_line)
-        # Line 1-0: |n, n, n, n, n, n, n|
-        print(line_n +
-              nnn * 5 +
-              n_line)
-        # Line 0: a0-, -, -, -, -, -, -g0
+        # Line 0: a0-, -, -, -d0-, -, -, -g0
         print(curr_board[0] + "-" * 4 +
-              dash * 5 +
-              "-" * 4 + curr_board[1])
+              dash * 2 +
+              "-" * 2 + curr_board[1] + "-" * 2 +
+              dash * 2 +
+              "-" * 4 + curr_board[2])
 
     @staticmethod
     def flip_board(curr_board):
@@ -357,47 +364,53 @@ class MorrisGame:
         :return: a list of locations of neighbors of the piece at location
         """
         if location == 0:
-            return [1,6]
+            return [1,9]
         elif location == 1:
-            return [0,11]
+            return [0,2,4]
         elif location == 2:
-            return [3,7]
+            return [1,14]
         elif location == 3:
-            return [2,10]
+            return [4,10]
         elif location == 4:
-            return [5,8]
+            return [1,3,5,7]
         elif location == 5:
-            return [4,9]
+            return [4,13]
         elif location == 6:
-            return [0,7,18]
+            return [7,11]
         elif location == 7:
-            return [2,6,8,15]
+            return [4,6,8]
         elif location == 8:
-            return [4,7,12]
+            return [7,12]
         elif location == 9:
-            return [5,10,14]
+            return [0,10,21]
         elif location == 10:
-            return [3,9,11,17]
+            return [3,9,11,18]
         elif location == 11:
-            return [1,10,20]
+            return [6,10,15]
         elif location == 12:
-            return [8,13]
+            return [8,13,17]
         elif location == 13:
-            return [12,14,16]
+            return [5,12,14,20]
         elif location == 14:
-            return [9,13]
+            return [2,13,23]
         elif location == 15:
-            return [7,16]
+            return [11,16]
         elif location == 16:
-            return [13,15,17,19]
+            return [15,17,19]
         elif location == 17:
-            return [10,16]
+            return [12,16]
         elif location == 18:
-            return [6,19]
+            return [10,19]
         elif location == 19:
-            return [16,18,20]
+            return [16,18,20,22]
         elif location == 20:
-            return [11,19]
+            return [13,19]
+        elif location == 21:
+            return [9,22]
+        elif location == 22:
+            return [19,21,23]
+        elif location == 23:
+            return [14,22]
         else:
             return []
 
@@ -410,122 +423,146 @@ class MorrisGame:
         """
         c = curr_board[location]
         if location == 0:
-            if curr_board[6] == c and curr_board[3] == c:
+            if curr_board[9] == c and curr_board[21] == c or\
+                    curr_board[1] == c and curr_board[2] == c:
                 return True
             else:
                 return False
         elif location == 1:
-            if curr_board[11] == c and curr_board[20] == c:
+            if curr_board[0] == c and curr_board[2] == c or \
+                    curr_board[4] == c and curr_board[7] == c:
                 return True
             else:
                 return False
         elif location == 2:
-            if curr_board[7] == c and curr_board[15] == c:
+            if curr_board[0] == c and curr_board[1] == c or \
+                    curr_board[14] == c and curr_board[23] == c:
                 return True
             else:
                 return False
         elif location == 3:
-            if curr_board[10] == c and curr_board[17] == c:
+            if curr_board[4] == c and curr_board[5] == c or \
+                    curr_board[10] == c and curr_board[18] == c:
                 return True
             else:
                 return False
         elif location == 4:
-            if curr_board[8] == c and curr_board[12] == c:
+            if curr_board[3] == c and curr_board[5] == c or \
+                    curr_board[1] == c and curr_board[7] == c:
                 return True
             else:
                 return False
         elif location == 5:
-            if curr_board[9] == c and curr_board[14] == c:
+            if curr_board[3] == c and curr_board[4] == c or \
+                    curr_board[13] == c and curr_board[20] == c:
                 return True
             else:
                 return False
         elif location == 6:
-            if curr_board[0] == c and curr_board[18] == c\
-                    or curr_board[7] == c and curr_board[8] == c:
+            if curr_board[7] == c and curr_board[8] == c\
+                    or curr_board[11] == c and curr_board[15] == c:
                 return True
             else:
                 return False
         elif location == 7:
             if curr_board[6] == c and curr_board[8] == c \
-                    or curr_board[15] == c and curr_board[2] == c:
+                    or curr_board[1] == c and curr_board[4] == c:
                 return True
             else:
                 return False
         elif location == 8:
             if curr_board[6] == c and curr_board[7] == c \
-                    or curr_board[4] == c and curr_board[12] == c:
+                    or curr_board[12] == c and curr_board[17] == c:
                 return True
             else:
                 return False
         elif location == 9:
-            if curr_board[5] == c and curr_board[14] == c \
+            if curr_board[0] == c and curr_board[21] == c \
                     or curr_board[10] == c and curr_board[11] == c:
                 return True
             else:
                 return False
         elif location == 10:
             if curr_board[9] == c and curr_board[11] == c \
-                    or curr_board[17] == c and curr_board[3] == c:
+                    or curr_board[3] == c and curr_board[18] == c:
                 return True
             else:
                 return False
         elif location == 11:
-            if curr_board[20] == c and curr_board[1] == c \
+            if curr_board[6] == c and curr_board[15] == c \
                     or curr_board[9] == c and curr_board[10] == c:
                 return True
             else:
                 return False
         elif location == 12:
-            if curr_board[8] == c and curr_board[4] == c \
+            if curr_board[8] == c and curr_board[17] == c \
                     or curr_board[13] == c and curr_board[14] == c:
                 return True
             else:
                 return False
         elif location == 13:
             if curr_board[12] == c and curr_board[14] == c \
-                    or curr_board[16] == c and curr_board[19] == c:
+                    or curr_board[5] == c and curr_board[20] == c:
                 return True
             else:
                 return False
         elif location == 14:
             if curr_board[12] == c and curr_board[13] == c \
-                    or curr_board[9] == c and curr_board[5] == c:
+                    or curr_board[2] == c and curr_board[23] == c:
                 return True
             else:
                 return False
         elif location == 15:
-            if curr_board[7] == c and curr_board[2] == c \
+            if curr_board[6] == c and curr_board[11] == c \
                     or curr_board[16] == c and curr_board[17] == c:
                 return True
             else:
                 return False
         elif location == 16:
             if curr_board[15] == c and curr_board[17] == c \
-                    or curr_board[13] == c and curr_board[19] == c:
+                    or curr_board[19] == c and curr_board[22] == c:
                 return True
             else:
                 return False
         elif location == 17:
             if curr_board[15] == c and curr_board[16] == c \
-                    or curr_board[10] == c and curr_board[3] == c:
+                    or curr_board[8] == c and curr_board[12] == c:
                 return True
             else:
                 return False
         elif location == 18:
-            if curr_board[6] == c and curr_board[0] == c \
+            if curr_board[3] == c and curr_board[10] == c \
                     or curr_board[19] == c and curr_board[20] == c:
                 return True
             else:
                 return False
         elif location == 19:
             if curr_board[18] == c and curr_board[20] == c \
-                    or curr_board[16] == c and curr_board[13] == c:
+                    or curr_board[16] == c and curr_board[22] == c:
                 return True
             else:
                 return False
         elif location == 20:
             if curr_board[19] == c and curr_board[18] == c \
-                    or curr_board[11] == c and curr_board[1] == c:
+                    or curr_board[13] == c and curr_board[5] == c:
+                return True
+            else:
+                return False
+        elif location == 21:
+            if curr_board[22] == c and curr_board[23] == c \
+                    or curr_board[9] == c and curr_board[0] == c:
+                return True
+            else:
+                return False
+        elif location == 22:
+            if curr_board[21] == c and curr_board[23] == c \
+                    or curr_board[16] == c and curr_board[19] == c:
+                return True
+            else:
+                return False
+        elif location == 23:
+            if curr_board[21] == c and curr_board[22] == c \
+                    or curr_board[14] == c and curr_board[2] == c:
                 return True
             else:
                 return False
@@ -562,12 +599,11 @@ class MorrisGame:
             num_black_moves = len(list_moves)
             if num_black <= 2:
                 return 10000
-            elif num_white <= 2:
+            if num_white <= 2:
                 return -10000
-            elif num_black_moves == 0:
+            if num_black_moves == 0:
                 return 10000
-            else:
-                return 1000 * (num_white - num_black) - num_black_moves
+            return 1000 * (num_white - num_black) - num_black_moves
 
     @staticmethod
     def count_piece(piece_color, curr_board):
@@ -589,13 +625,13 @@ class MorrisGame:
         A helpful reference guide to help players know which number corresponds
         to which space.
         """
-        print("18-a6 ----- ----- 19-d6 ----- ----- 20-g6")
-        print("----- 15-b5 ----- 16-d5 ----- 17-f5 -----")
-        print("----- ----- 12-c4 13-d4 14-e4 ----- -----")
-        print("06-a3 07-b3 08-c3 ----- 09-e3 10-f3 11-g3")
-        print("----- ----- 04-c2 ----- 05-e2 ----- -----")
-        print("----- 02-b1 ----- ----- ----- 03-f1 -----")
-        print("00-a0 ----- ----- ----- ----- ----- 01-g0\n")
+        print("21-a6 ----- ----- 22-d6 ----- ----- 23-g6")
+        print("----- 18-b5 ----- 19-d5 ----- 20-f5 -----")
+        print("----- ----- 15-c4 16-d4 17-e4 ----- -----")
+        print("09-a3 10-b3 11-c3 ----- 12-e3 13-f3 14-g3")
+        print("----- ----- 06-c2 07-d2 08-e2 ----- -----")
+        print("----- 03-b1 ----- 04-d1 ----- 05-f1 -----")
+        print("00-a0 ----- ----- 01-d0 ----- ----- 02-g0\n")
         print("To move, first indicate the numerical designation (i.e. 0" +
               " for a0, 11 for g3, etc.) of the piece you want to move, " +
               "\nthen indicate the number or space code for the place you " +
@@ -627,5 +663,6 @@ class MorrisGame:
 
 if __name__ == '__main__':
     morris = MorrisGame()
+    morris.print_board(morris.board_state)
     morris.print_reference()
     #morris.play()
