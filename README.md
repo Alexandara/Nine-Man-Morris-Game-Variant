@@ -145,7 +145,4 @@ MINIMAX estimate: -2
 Board Position: xBBBxxBxBWWWxxWxWxxBx
 Positions evaluated by static estimation: 3596
 MINIMAX estimate: 8
-```
-## GitHub
-GitHub available upon request (currently private for academic
-integrity). 
+``` 
